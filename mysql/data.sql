@@ -2424,8 +2424,3 @@ insert into Payslip_Details (detail_id, payslip_id, payroll_item_id, applied_amo
 insert into Payslip_Details (detail_id, payslip_id, payroll_item_id, applied_amount) values (null, 431, 5, 361.67);
 
 SET FOREIGN_KEY_CHECKS = 1;
-
-SET FOREIGN_KEY_CHECKS = 1;
-
-SET FOREIGN_KEY_CHECKS = 1;
-SET FOREIGN_KEY_CHECKS=1;

@@ -11,13 +11,14 @@ SELECT * FROM Employees WHERE email = "smiddup9@tinyurl.com";
 -- 3. List all employees showing their name, position title, and department name.
 SELECT e.employee_name, p.position_title, d.department_name FROM Employees e JOIN Positions p ON e.position_id = p.position_id JOIN Departments d ON e.department_id = d.department_id;
 
-
 -- 4. List all employees in the 'Engineering' department.
 SELECT e.employee_name, e.email, e.hire_date FROM Employees e JOIN Departments d ON e.department_id = d.department_id WHERE d.department_name = 'Engineering';
 
+-- 5. Display a detailed payslip for a given employee and month
+select pls.payslip_id, e.employee_name, pls.net_salary, pri.item_name, pri.item_type, pd.applied_amount from payslips pls inner join employees e on pls.employee_id=e.employee_id inner join Payslip_Details pd on pls.payslip_id=pd.payslip_id inner join Payroll_items pri on pri.item_id=pd.payroll_item_id where e.employee_id=7 and YEAR(pls.pay_month) = 2025 and MONTH(pls.pay_month)=6;
 
-
-
+-- 6. Identify employees who have never received a 'Performance Bonus'.
+select pls.payslip_id, e.employee_name, pls.net_salary, pri.item_name, pri.item_type, pd.applied_amount from payslips pls inner join employees e on pls.employee_id=e.employee_id inner join Payslip_Details pd on pls.payslip_id=pd.payslip_id inner join Payroll_items pri on pri.item_id=pd.payroll_item_id where pri.item_type!="Bonus";
 
 -- 7. Identify departments that currently have no employees.
 SELECT d.department_id, d.department_name
@@ -33,11 +34,12 @@ FROM Employees e JOIN Departments d ON e.department_id = d.department_id JOIN Po
 -- 11. Calculate the total gross payroll paid by the company for each month.
 SELECT DATE_FORMAT(pay_month, '%Y-%m') AS month, SUM(gross_salary) AS total_gross_payroll FROM Payslips GROUP BY DATE_FORMAT(pay_month, '%Y-%m') ORDER BY month;
 
+-- 12. Find the top 5 employees with the highest net salary on the last recorded payslip.
+SELECT e.employee_name, psl.net_salary, psl.pay_month FROM Employees e INNER JOIN Payslips psl ON psl.employee_id = e.employee_id WHERE YEAR(psl.pay_month)=YEAR(CURDATE()) ORDER BY psl.net_salary  DESC LIMIT 5;
 
 -- ==============================
 -- Phase 4: Modifications (DML)
 -- ==============================
-
 
 -- 1. increase 'Senior' base_annual_salary by 5%.
 UPDATE Positions SET base_annual_salary = base_annual_salary * 1.05 WHERE level = 'Senior';
