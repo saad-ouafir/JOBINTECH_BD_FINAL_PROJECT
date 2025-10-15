@@ -18,8 +18,7 @@ SELECT e.employee_name, e.email, e.hire_date FROM Employees e JOIN Departments d
 select pls.payslip_id, e.employee_name, pls.net_salary, pri.item_name, pri.item_type, pd.applied_amount from payslips pls inner join employees e on pls.employee_id=e.employee_id inner join Payslip_Details pd on pls.payslip_id=pd.payslip_id inner join Payroll_items pri on pri.item_id=pd.payroll_item_id where e.employee_id=7 and YEAR(pls.pay_month) = 2025 and MONTH(pls.pay_month)=6;
 
 -- 6. Identify employees who have never received a 'Performance Bonus'.
-select pls.payslip_id, e.employee_name, pls.net_salary, pri.item_name, pri.item_type, pd.applied_amount from payslips pls inner join employees e on pls.employee_id=e.employee_id inner join Payslip_Details pd on pls.payslip_id=pd.payslip_id inner join Payroll_items pri on pri.item_id=pd.payroll_item_id where pri.item_type!="Bonus";
-
+select pls.payslip_id,e.employee_id, e.employee_name from payslips pls inner join employees e on pls.employee_id=e.employee_id inner join Payslip_Details pd on pls.payslip_id=pd.payslip_id inner join Payroll_items pri on pri.item_id=pd.payroll_item_id where pri.item_type!="Bonus";
 -- 7. Identify departments that currently have no employees.
 SELECT d.department_id, d.department_name
 FROM Departments d LEFT JOIN Employees e ON d.department_id = e.department_id WHERE e.employee_id IS NULL;
